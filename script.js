@@ -1,5 +1,5 @@
 // get user input
-const inputSize = document.querySelector("#grid-size");
+const resizeBtn = document.querySelector("#resizeBtn");
 const main = document.querySelector(".grid-container");
 
 // 🧠 Reusable function to build the grid
@@ -21,13 +21,16 @@ function createGrid(size) {
 // 🚀 Run when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   createGrid(16); // default
+  resizeBtn.textContent = "16 × 16";
 });
 
 // 🔄 Run when input value changes
-inputSize.addEventListener("change", () => {
-  const value = parseInt(inputSize.value);
+resizeBtn.addEventListener("click", () => {
+   let userInput = prompt("Enter a grid size from 1 to 100:");
+  const value = parseInt(userInput);
   if (!isNaN(value) && value >= 1 && value <= 100) {
     createGrid(value);
+    resizeBtn.textContent = `${value} × ${value}`; 
   } else {
     console.warn("Enter a number between 1 and 100.");
   }
