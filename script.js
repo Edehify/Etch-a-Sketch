@@ -13,7 +13,9 @@ function createGrid(size) {
     div.classList.add("square");
     div.style.width = `${squareSize - 2}px`;  // subtract for borders
     div.style.height = `${squareSize - 2}px`;
-    div.style.backgroundColor = `${selectedColor}`; // for testing
+    div.addEventListener("mouseover", () => {
+    div.style.backgroundColor = selectedColor;
+}); // for testing
     main.appendChild(div);
   }
 }
@@ -42,6 +44,10 @@ resizeBtn.addEventListener("click", () => {
 // get color picker
 const inputColor = document.querySelector("#color-picker");
 let selectedColor = inputColor.value;
+inputColor.addEventListener("input", () => {
+  selectedColor = inputColor.value;
+});
+
 
 
 
