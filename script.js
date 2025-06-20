@@ -1,6 +1,12 @@
 // get user input
 const resizeBtn = document.querySelector("#resizeBtn");
 const main = document.querySelector(".grid-container");
+// get flags to switch button on/off when clicks
+let isRainbow = false
+
+let isEraser = false
+
+let isDarken = false
 
 // 🧠 Reusable function to build the grid
 function createGrid(size) {
@@ -14,7 +20,7 @@ function createGrid(size) {
     div.style.width = `${squareSize - 2}px`;  // subtract for borders
     div.style.height = `${squareSize - 2}px`;
     div.addEventListener("mouseover", () => {
-    div.style.backgroundColor = selectedColor;
+    div.style.backgroundColor = getCurrentColor(div);
 }); // for testing
     main.appendChild(div);
   }
@@ -47,6 +53,62 @@ let selectedColor = inputColor.value;
 inputColor.addEventListener("input", () => {
   selectedColor = inputColor.value;
 });
+
+// function to chose user choice of color buttons on
+function getCurrentColor(div) {
+  if(isDarken)
+    return getDarken(div);
+  if(isRainbow)
+    return getRandomColor();
+  if(isEraser)
+    return "#ffffff";
+  else 
+    return selectedColor;
+
+} 
+// create rainbow or random color
+ function getRandomColor() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+// get darken button , rainbow button and erase button
+const darkenBtn = document.querySelector("#darken-btn");
+const rainbowBtn = document.querySelector("#rainbow-btn");
+const eraseBtn = document.querySelector("#eraser-btn");
+
+// add click function to buttons
+darkenBtn.addEventListener("click", ()=>{
+  isDarken = !isDarken;
+  isEraser = isEraser;
+  isRainbow = isRainbow;
+});
+
+rainbowBtn.addEventListener("click", ()=>{
+  isDarken = isDarken;
+  isEraser = isEraser;
+  isRainbow = !isRainbow;
+});
+
+eraseBtn.addEventListener("click", ()=>{
+  isDarken = isDarken;
+  isEraser = !isEraser;
+  isRainbow = isRainbow;
+})
+// get current color when hover
+
+function getDarken(div){
+ const currentColor = getComputedStyle(div).backgroundColor;
+
+ // Check if it's already RGBA (darkened)
+  let darkness = parseFloat(div.dataset.darkness || 0);
+  darkness = Math.min(darkness + 0.1, 1); // cap at 1
+
+  div.dataset.darkness = darkness;
+  return `rgba(0, 0, 0, ${darkness})`;
+
+}
 
 
 
