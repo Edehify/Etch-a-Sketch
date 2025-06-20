@@ -111,6 +111,17 @@ function getDarken(div){
 }
 
 
+// get clear button
+const clearBtn = document.querySelector("#clear-btn");
+
+
+clearBtn.addEventListener("click", ()=> {
+  isDarken = false;
+  isEraser = false;
+  isRainbow = false;
+  createGrid(16);
+
+})
 
 
 
